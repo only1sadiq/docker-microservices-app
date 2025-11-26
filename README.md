@@ -42,6 +42,4 @@ I have included a bash script to automate the provisioning of the network and co
 * **MongoDB** (Database)
 * **Node.js** (Backend)
 
-## Attribution
-* The application code is based on a demo by *TechWorld with Nana*, adapted here to demonstrate infrastructure automation and custom networking configuration.
 
