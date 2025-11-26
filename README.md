@@ -1,53 +1,47 @@
-Docker Microservices Deployment
-This project demonstrates the containerization of a Node.js application with a persistent database layer. It utilizes a custom Docker Bridge Network to ensure secure, isolated communication between the application, the database, and the administration UI.
+# Docker Microservices Deployment
 
-Attribution: The application logic is based on a demo by Nana Janashia, adapted here to demonstrate infrastructure automation and network configuration.
+This project demonstrates the infrastructure setup for a containerized **Node.js** application with a persistent **MongoDB** database layer. 
 
-Architecture
-The setup consists of three containers running on a user-defined bridge network:
+The goal was to move away from fragile local setups and create a **reproducible environment** where the application, database, and administration tools communicate seamlessly using a custom Docker Bridge Network.
 
-MongoDB: Persistent data storage.
+## Architecture
 
-Mongo-Express: Web-based database administration interface.
+The setup consists of three containers running on a user-defined isolated network:
 
-Node.js App: The backend service communicating with the database.
+1.  **MongoDB:** Handles persistent data storage (stateful).
+2.  **Mongo-Express:** A lightweight web-based interface for database administration.
+3.  **Node.js App:** The backend service that interfaces with the database via internal DNS.
 
-How to Run
-I have included a bash script to automate the provisioning of the network and containers.
+##  How to Run
 
-Prerequisites:
+I have included a bash script to automate the provisioning of the network and containers so you don't have to type the commands manually.
 
-Docker Desktop installed and running.
+### Prerequisites
+* Docker Desktop installed and running.
 
-Steps:
+### Quick Start
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/only1sadiq/docker-microservices-app.git](https://github.com/only1sadiq/docker-microservices-app.git)
+    cd docker-microservices-app
+    ```
 
-Clone the repository:
+2.  **Run the automation script:**
+    ```bash
+    sh start_app.sh
+    ```
+    *This script checks for the network, creates it if missing, and spins up the database and UI containers with the correct environment variables.*
 
-Bash
+3.  **Access the services:**
+    * **Mongo Express UI:** [http://localhost:8081](http://localhost:8081)
+    * **Node Application:** [http://localhost:3000](http://localhost:3000)
 
-git clone https://github.com/your-username/docker-microservices-app.git
-Navigate to the directory:
+## Tech Stack
+* **Docker & Docker Network**
+* **Bash Scripting** (Infrastructure Automation)
+* **MongoDB** (Database)
+* **Node.js** (Backend)
 
-Bash
-
-cd docker-microservices-app
-Run the automation script:
-
-Bash
-
-sh start_app.sh
-Access the interfaces:
-
-Mongo Express UI: http://localhost:8081
-
-Application: http://localhost:3000 (or whatever port the app uses)
-
-Tech Stack
-Docker & Docker Network
-
-Bash Scripting (Automation)
-
-MongoDB
-
-Node.js
+## Attribution
+* The application code is based on a demo by *TechWorld with Nana*, adapted here to demonstrate infrastructure automation and custom networking configuration.
 
