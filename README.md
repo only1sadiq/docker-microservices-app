@@ -1,72 +1,53 @@
-## demo app - developing with Docker
+Docker Microservices Deployment
+This project demonstrates the containerization of a Node.js application with a persistent database layer. It utilizes a custom Docker Bridge Network to ensure secure, isolated communication between the application, the database, and the administration UI.
 
-This demo app shows a simple user profile app set up using 
-- index.html with pure js and css styles
-- nodejs backend with express module
-- mongodb for data storage
+Attribution: The application logic is based on a demo by Nana Janashia, adapted here to demonstrate infrastructure automation and network configuration.
 
-All components are docker-based
+Architecture
+The setup consists of three containers running on a user-defined bridge network:
 
-### With Docker
+MongoDB: Persistent data storage.
 
-#### To start the application
+Mongo-Express: Web-based database administration interface.
 
-Step 1: Create docker network
+Node.js App: The backend service communicating with the database.
 
-    docker network create mongo-network 
+How to Run
+I have included a bash script to automate the provisioning of the network and containers.
 
-Step 2: start mongodb 
+Prerequisites:
 
-    docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --name mongodb --net mongo-network mongo    
+Docker Desktop installed and running.
 
-Step 3: start mongo-express
-    
-    docker run -d -p 8081:8081 -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password --net mongo-network --name mongo-express -e ME_CONFIG_MONGODB_SERVER=mongodb mongo-express   
+Steps:
 
-_NOTE: creating docker-network in optional. You can start both containers in a default network. In this case, just emit `--net` flag in `docker run` command_
+Clone the repository:
 
-Step 4: open mongo-express from browser
+Bash
 
-    http://localhost:8081
+git clone https://github.com/your-username/docker-microservices-app.git
+Navigate to the directory:
 
-Step 5: create `user-account` _db_ and `users` _collection_ in mongo-express
+Bash
 
-Step 6: Start your nodejs application locally - go to `app` directory of project 
+cd docker-microservices-app
+Run the automation script:
 
-    cd app
-    npm install 
-    node server.js
-    
-Step 7: Access you nodejs application UI from browser
+Bash
 
-    http://localhost:3000
+sh start_app.sh
+Access the interfaces:
 
-### With Docker Compose
+Mongo Express UI: http://localhost:8081
 
-#### To start the application
+Application: http://localhost:3000 (or whatever port the app uses)
 
-Step 1: start mongodb and mongo-express
+Tech Stack
+Docker & Docker Network
 
-    docker-compose -f docker-compose.yaml up
-    
-_You can access the mongo-express under localhost:8080 from your browser_
-    
-Step 2: in mongo-express UI - create a new database "my-db"
+Bash Scripting (Automation)
 
-Step 3: in mongo-express UI - create a new collection "users" in the database "my-db"       
-    
-Step 4: start node server 
+MongoDB
 
-    cd app
-    npm install
-    node server.js
-    
-Step 5: access the nodejs application from browser 
+Node.js
 
-    http://localhost:3000
-
-#### To build a docker image from the application
-
-    docker build -t my-app:1.0 .       
-    
-The dot "." at the end of the command denotes location of the Dockerfile.
